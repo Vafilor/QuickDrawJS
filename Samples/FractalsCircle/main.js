@@ -16,7 +16,6 @@ function initialize(){
 
 function requestDraw()
 {
-
 	var data = isValidData();
 
 	if( data.result )
@@ -71,6 +70,14 @@ function isValidData()
 				  isValidDrawLines(drawLines)             &&
 				  isValidDrawCircles(drawCircles);		
 	
+/*	
+	console.log(isValidNumberOfCircles(numberOfCircles));
+	console.log(isValidFractalDepth(fractalDepth));
+	console.log(isValidOverlapping(overlapping) );
+	console.log(isValidDrawLines(drawLines)     );
+	console.log(isValidDrawCircles(drawCircles));
+	console.log(isValid);
+*/
 	
 	var results = {
 		result: isValid,
@@ -151,15 +158,35 @@ function isValidDrawCircles(drawCircles)
 //Get data inputs
 function draw()
 {
+	/*
+	
+		var results = {
+		result: isValid,
+		numberOfCircles: numberOfCircles,
+		fractalDepth: fractalDepth,
+		overlapping: overlapping,
+		drawLines: drawLines,
+		drawCircles: drawCircles
+	};
+	
+	*/
+	var inputData = isValidData();
+	
+	if(!inputData.result) {
+		console.log("Error");
+	}
+	
+	var degrees = convertNumberOfCirclesToDegrees(inputData.numberOfCircles);
+	
 	Graphics.drawFilledRectangle(drawingInformation.brush, 0, 0, drawingInformation.screenWidth, drawingInformation.screenHeight, "#FFFFFF");
 
 	var bigCircleRadius = 200;
-	var smallCircleRadius = getSmallCircleRadius(bigCircleRadius, convertDegreesToRadians(30) );
+	var smallCircleRadius = getSmallCircleRadius(bigCircleRadius, convertDegreesToRadians(degrees) );
 	var centerPoint = new Vector2D(200, 200);
 	
 	
 	console.log(smallCircleRadius);
-	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, 3, 0, 3)
+	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth);
 
 }
 
@@ -172,12 +199,14 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 		
 		var currentRadians = 0;
 		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0);
-		//Graphics.drawFilledCircle = function(brush, centerX, centerY, radius, fillColor)
 		while(currentRadians < 2*Math.PI)
 		{
-		//TODO change to drawing information
-			Graphics.drawFilledCircle(drawingInformation.brush, currentVector.x + 200, currentVector.y + 200, smallCircleRadius, "#FF0000");
-			//numberOfCirclesDrawn++;
+			Graphics.drawCircle(drawingInformation.brush, currentVector.x + 200, currentVector.y + 200, smallCircleRadius, 2, "#FF0000"); //TODO dynamic width
+			
+			var newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
+			
+			//drawCircles(new Vector2D(currentVector.x , currentVector.y ), smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth );
+			
 			currentRadians += getRadiansGivenNumberOfCircles(numberOfCircles);
 			currentVector = currentVector.rotate( getRadiansGivenNumberOfCircles(numberOfCircles)  );
 		}
@@ -185,7 +214,7 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 
 function getRadiansGivenNumberOfCircles(numberOfCircles)
 {
-	return Math.PI / numberOfCircles;
+	return 2*Math.PI / numberOfCircles;
 }
 
 function getSmallCircleRadius(bigCircleRadius, angleInRadians)
@@ -198,4 +227,9 @@ function getSmallCircleRadius(bigCircleRadius, angleInRadians)
 function convertDegreesToRadians(degrees)
 {
 	return degrees * Math.PI/180.0;
+}
+
+//TODO validate input
+function convertNumberOfCirclesToDegrees(numberOfCircles) {
+	return 180.0 / numberOfCircles;
 }
