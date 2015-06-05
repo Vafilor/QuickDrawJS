@@ -1,0 +1,17 @@
+function drawVector3DPoint(vector, size, color )
+{
+	var newX = vector.x - vector.z * 0.707106 + 200;
+	var newY = -vector.y + vector.z * 0.707106 + 200;
+	
+	Graphics.drawFilledCircle(brush, newX, newY, size, color);
+}
+
+//Returns structure: {x: y:}
+function convertVector3DToScreenCoordinates(vector3d)
+{
+	return {
+		x: vector.x - vector.z * 0.707106,
+		y: -vector.y + vector.z * 0.707106 + 200;
+		
+	};
+}
