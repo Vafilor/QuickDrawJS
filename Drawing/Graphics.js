@@ -56,6 +56,11 @@ Graphics.drawArc = function(brush, startX, startY, radius, startRadians, endRadi
     brush.closePath();
 };
 
+Graphics.drawCircle = function(brush, centerX, centerY, radius, width, color) 
+{
+	Graphics.drawArc(brush, centerX, centerY, radius, 0, 2*Math.PI, width, color);
+}
+
 Graphics.drawFilledCircle = function(brush, centerX, centerY, radius, fillColor)
 {
     brush.fillStyle = fillColor;
