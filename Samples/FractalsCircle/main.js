@@ -182,15 +182,20 @@ function draw()
 
 	var bigCircleRadius = 200;
 	var smallCircleRadius = getSmallCircleRadius(bigCircleRadius, convertDegreesToRadians(degrees) );
+	
+	if(inputData.overlapping) {
+		smallCircleRadius = bigCircleRadius / 2;
+	}
+	
 	var centerPoint = new Vector2D(200, 200);
 	
 	
 	console.log(smallCircleRadius);
-	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles);
+	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping);
 
 }
 
-function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles)
+function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles)
 {
 		if( depth >= maxDepth )
 		{
@@ -200,6 +205,7 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 		var currentRadians = 0.0;
 		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0); 
 		var currentChildCenter = null;
+		var newSmallCircleRadius = bigCircleRadius / 2;
 		
 		while(currentRadians < 2*Math.PI)
 		{
@@ -213,7 +219,10 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, currentChildCenter.x + 200, currentChildCenter.y + 200, 2, "#000000");
 			}
 			
-			var newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
+			
+			if(!overlappingCircles) {
+				newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
+			}
 			
 			drawCircles(currentChildCenter, smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles );
 			
