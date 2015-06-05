@@ -186,11 +186,11 @@ function draw()
 	
 	
 	console.log(smallCircleRadius);
-	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth);
+	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles);
 
 }
 
-function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCircles, depth, maxDepth)
+function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles)
 {
 		if( depth >= maxDepth )
 		{
@@ -198,15 +198,24 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 		}
 		
 		var currentRadians = 0.0;
-		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0);
+		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0); 
+		var currentChildCenter = null;
 		
 		while(currentRadians < 2*Math.PI)
 		{
-			Graphics.drawCircle(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, bigCircleRadius, 2, "#FF0000"); //TODO dynamic width
+			currentChildCenter = centerPoint.add(currentVector.rotate(currentRadians));
+			
+			if(doDrawCircles) {
+				Graphics.drawCircle(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, bigCircleRadius, 2, "#FF0000"); //TODO dynamic width
+			}
+			
+			if(drawLines) {
+				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, currentChildCenter.x + 200, currentChildCenter.y + 200, 2, "#000000");
+			}
 			
 			var newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
 			
-			drawCircles(centerPoint.add(currentVector.rotate(currentRadians)), smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth );
+			drawCircles(currentChildCenter, smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles );
 			
 			currentRadians += getRadiansGivenNumberOfCircles(numberOfCircles);
 		}
