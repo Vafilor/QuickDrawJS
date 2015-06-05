@@ -197,18 +197,18 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 			return;
 		}
 		
-		var currentRadians = 0;
+		var currentRadians = 0.0;
 		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0);
+		
 		while(currentRadians < 2*Math.PI)
 		{
-			Graphics.drawCircle(drawingInformation.brush, currentVector.x + 200, currentVector.y + 200, smallCircleRadius, 2, "#FF0000"); //TODO dynamic width
+			Graphics.drawCircle(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, bigCircleRadius, 2, "#FF0000"); //TODO dynamic width
 			
 			var newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
 			
-			//drawCircles(new Vector2D(currentVector.x , currentVector.y ), smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth );
+			drawCircles(centerPoint.add(currentVector.rotate(currentRadians)), smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth );
 			
 			currentRadians += getRadiansGivenNumberOfCircles(numberOfCircles);
-			currentVector = currentVector.rotate( getRadiansGivenNumberOfCircles(numberOfCircles)  );
 		}
 }
 
