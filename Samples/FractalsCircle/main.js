@@ -189,24 +189,28 @@ function draw()
 	
 	var centerPoint = new Vector2D(200, 200);
 	
-	
-	console.log(smallCircleRadius);
-	drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping);
+	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping);
 
 }
 
-function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles)
+function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles)
 {
-		if( depth >= maxDepth )
+		if( depth > maxDepth )
 		{
 			return;
 		}
-		
+				
 		var currentRadians = 0.0;
-		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0); 
 		var currentChildCenter = null;
-		var newSmallCircleRadius = bigCircleRadius / 2;
+		var smallCircleRadius = bigCircleRadius / 2;
 		
+		if(!overlappingCircles) {
+			smallCircleRadius = getSmallCircleRadius(bigCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
+		}
+
+		var currentVector = new Vector2D(bigCircleRadius - smallCircleRadius,0); 
+
+				
 		while(currentRadians < 2*Math.PI)
 		{
 			currentChildCenter = centerPoint.add(currentVector.rotate(currentRadians));
@@ -219,12 +223,7 @@ function drawCircles(centerPoint, bigCircleRadius, smallCircleRadius, numberOfCi
 				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, currentChildCenter.x + 200, currentChildCenter.y + 200, 2, "#000000");
 			}
 			
-			
-			if(!overlappingCircles) {
-				newSmallCircleRadius = getSmallCircleRadius(smallCircleRadius, getRadiansGivenNumberOfCircles(numberOfCircles)/2 );
-			}
-			
-			drawCircles(currentChildCenter, smallCircleRadius, newSmallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles );
+			drawCircles(currentChildCenter, smallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles, overlappingCircles );
 			
 			currentRadians += getRadiansGivenNumberOfCircles(numberOfCircles);
 		}
@@ -237,8 +236,6 @@ function getRadiansGivenNumberOfCircles(numberOfCircles)
 
 function getSmallCircleRadius(bigCircleRadius, angleInRadians)
 {
-	console.log(bigCircleRadius);
-	console.log(angleInRadians);
 	return bigCircleRadius * ( Math.sin(angleInRadians) / (1 + Math.sin(angleInRadians) ));
 }
 
