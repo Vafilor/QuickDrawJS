@@ -60,12 +60,14 @@ function isValidData()
 {
 	var numberOfCircles = parseInt(document.getElementById("menuNumberCircles").value);
 	var fractalDepth = parseInt(document.getElementById("menuFractalDepth").value);	
+	var lineLength = parseFloat(document.getElementById("menuLineLength").value);
 	var overlapping = document.getElementById("menuTypeOfCirclesOverlapping").checked;
 	var drawLines = document.getElementById("menuDrawLines").checked;
 	var drawCircles = document.getElementById("menuDrawCircles").checked;
 	
 	var isValid = isValidNumberOfCircles(numberOfCircles) &&
 				  isValidFractalDepth(fractalDepth)       &&
+				  isValidLineLength(lineLength)			  &&
 				  isValidOverlapping(overlapping)         &&
 				  isValidDrawLines(drawLines)             &&
 				  isValidDrawCircles(drawCircles);		
@@ -83,6 +85,7 @@ function isValidData()
 		result: isValid,
 		numberOfCircles: numberOfCircles,
 		fractalDepth: fractalDepth,
+		lineLength: lineLength,
 		overlapping: overlapping,
 		drawLines: drawLines,
 		drawCircles: drawCircles
@@ -155,6 +158,15 @@ function isValidDrawCircles(drawCircles)
 	return true;
 }
 
+function isValidLineLength(lineLength) {
+	if(typeof(lineLength) == "undefined" || isNaN(lineLength) || lineLength < 0) 
+	{
+		return false;
+	}
+	
+	return true;
+}
+
 //Get data inputs
 function draw()
 {
@@ -189,11 +201,11 @@ function draw()
 	
 	var centerPoint = new Vector2D(200, 200);
 	
-	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping);
+	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping, inputData.lineLength);
 
 }
 
-function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles)
+function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength)
 {
 		if( depth > maxDepth )
 		{
@@ -220,10 +232,11 @@ function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDe
 			}
 			
 			if(drawLines) {
-				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, currentChildCenter.x + 200, currentChildCenter.y + 200, 2, "#000000");
+				var lineEndPoint = centerPoint.add(currentVector.scale(lineLength).rotate(currentRadians));
+				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, lineEndPoint.x + 200, lineEndPoint.y + 200, 2, "#000000");
 			}
 			
-			drawCircles(currentChildCenter, smallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles, overlappingCircles );
+			drawCircles(currentChildCenter, smallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength );
 			
 			currentRadians += getRadiansGivenNumberOfCircles(numberOfCircles);
 		}
