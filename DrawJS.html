@@ -18,6 +18,26 @@
 		</style>
 	</head>
 	<body onload="initialize();">
+		<div id="menu">
+			Number of Circles <input type="text" id="menuNumberCircles" value="3">
+			<br/>
+			Depth <input type="text" id="menuFractalDepth"  value="3">
+			<br/>
+			Line Length<input type="text" id="menuLineLength"  value="1">
+			<br/>
+			Circle Width<input type="text" id="menuCircleWidth"  value="2">
+			<br/>
+			<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesOverlapping" value="overlapping"> Overlapping
+			<br/>
+			<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesNonOverlapping" value="nonOverlapping" checked="true"> Non-Overlapping
+			<br/>
+			<input type="checkbox" id="menuDrawLines"> Draw Lines
+			<br/>
+			<input type="checkbox" id="menuDrawCircles" checked="true"> Draw Circles
+			<br/>
+			<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+		</div>
+		
 		<canvas id="scene" ></canvas>
 	</body>
 </html>
