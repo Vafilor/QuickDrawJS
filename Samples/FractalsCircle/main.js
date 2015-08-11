@@ -4,13 +4,18 @@ var drawingInformation = null;
 
 function initialize(){
 	var canvas = document.getElementById("scene");
-	canvas.width = document.body.offsetWidth;
-	canvas.height = document.body.offsetHeight;
+	
+	var potentialWidth = document.body.offsetWidth - document.getElementById("menu").offsetWidth;
+	var potentialHeight = document.body.offsetHeight;
+	var length = Math.min(potentialWidth, potentialHeight);
+	
+	
+	canvas.width = length;
+	canvas.height = length;
 	var brush = canvas.getContext("2d");
 
-	drawingInformation = new DrawingInformation(brush, canvas.width, canvas.height, 200,200);
+	drawingInformation = new DrawingInformation(brush, canvas.width, canvas.height, 0, 0);
 	
-	//setInterval(draw, 20);
 	draw();
 }
 
@@ -51,7 +56,6 @@ function isDepthDangerous(depth)
 
 function displayDepthWarning()
 {
-///TODO
 	alert("Fractal depth is dangerous!");
 }
 //Returns an object of data processed
@@ -65,6 +69,7 @@ function isValidData()
 	var overlapping = document.getElementById("menuTypeOfCirclesOverlapping").checked;
 	var drawLines = document.getElementById("menuDrawLines").checked;
 	var drawCircles = document.getElementById("menuDrawCircles").checked;
+	var backgroundColor = document.getElementById("menuBackgroundColor").value;
 	
 	var isValid = isValidNumberOfCircles(numberOfCircles) &&
 				  isValidFractalDepth(fractalDepth)       &&
@@ -91,7 +96,8 @@ function isValidData()
 		circleWidth: circleWidth,
 		overlapping: overlapping,
 		drawLines: drawLines,
-		drawCircles: drawCircles
+		drawCircles: drawCircles,
+		backgroundColor: backgroundColor
 	};
 	
 	return results;
@@ -112,62 +118,33 @@ function isValidData()
 }
 
 function isValidNumberOfCircles(numberOfCircles)
-{
-	if( isNaN(numberOfCircles) || !numberOfCircles )
-	{
-		return false;
-	}
-	
-	return numberOfCircles > 0;
+{	
+	return !isNaN(numberOfCircles) && numberOfCircles > 0;
 }
 
 function isValidFractalDepth(fractalDepth)
-{
-	if(!fractalDepth)
-	{
-		return false;
-	}
-	
-	return fractalDepth > 0;
+{	
+	return !isNaN(fractalDepth) && fractalDepth > 0;
 }
 
 function isValidOverlapping(overlapping)
 {
-	if( typeof(overlapping) == "undefined")
-	{
-		return false;
-	}
-	
-	return true;
+	return typeof(overlapping) != "undefined";
 }
 
 function isValidDrawLines(drawLines)
 {
-	if(typeof(drawLines) == "undefined")
-	{
-		return false;
-	}
-	
-	return true;
+	return typeof(drawLines) != "undefined";
 }
 
 function isValidDrawCircles(drawCircles)
 {
-	if(typeof(drawCircles) == "undefined")
-	{
-		return false;
-	}
-
-	return true;
+	return typeof(drawCircles) != "undefined";
 }
 
 function isValidLineLength(lineLength) {
-	if(typeof(lineLength) == "undefined" || isNaN(lineLength) || lineLength < 0) 
-	{
-		return false;
-	}
-	
-	return true;
+	return typeof(lineLength) != "undefined" && 
+		   !isNaN(lineLength);
 }
 
 function isValidCircleWidth(circleWidth) {
@@ -202,19 +179,28 @@ function draw()
 	
 	var degrees = convertNumberOfCirclesToDegrees(inputData.numberOfCircles);
 	
-	Graphics.drawFilledRectangle(drawingInformation.brush, 0, 0, drawingInformation.screenWidth, drawingInformation.screenHeight, "#FFFFFF");
+	Graphics.drawFilledRectangle(drawingInformation.brush, 0, 0, drawingInformation.screenWidth, drawingInformation.screenHeight, inputData.backgroundColor);
 
-	var bigCircleRadius = 200;
+	var bigCircleRadius = drawingInformation.screenWidth / 2.0 - 20;
 	var smallCircleRadius = getSmallCircleRadius(bigCircleRadius, convertDegreesToRadians(degrees) );
 	
 	if(inputData.overlapping) {
 		smallCircleRadius = bigCircleRadius / 2;
 	}
 	
-	var centerPoint = new Vector2D(200, 200);
+	var centerPoint = new Vector2D(Math.round(drawingInformation.screenWidth / 2), Math.round(drawingInformation.screenHeight / 2 ));
+	
+	var startTime = Date.now();
 	
 	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping, inputData.lineLength, inputData.circleWidth);
 
+	var endTime = Date.now();
+	
+	var elapsedTime = (endTime - startTime)/1000;
+	
+	//Approximate time measurement
+	//alert("Time taken (Seconds):" + elapsedTime); 
+	
 }
 
 function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength, circleWidth)
@@ -240,12 +226,13 @@ function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDe
 			currentChildCenter = centerPoint.add(currentVector.rotate(currentRadians));
 			
 			if(doDrawCircles) {
-				Graphics.drawCircle(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, bigCircleRadius, circleWidth, "#FF0000"); //TODO dynamic width
+				Graphics.drawCircle(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(bigCircleRadius), circleWidth, "#FF0000"); //TODO dynamic width
 			}
 			
 			if(drawLines) {
 				var lineEndPoint = centerPoint.add(currentVector.scale(lineLength).rotate(currentRadians));
-				Graphics.drawLine(drawingInformation.brush, centerPoint.x + 200, centerPoint.y + 200, lineEndPoint.x + 200, lineEndPoint.y + 200, 2, "#000000");
+		
+				Graphics.drawLine(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(lineEndPoint.x), Math.floor(lineEndPoint.y), 2, "#FF0000");
 			}
 			
 			drawCircles(currentChildCenter, smallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength );
