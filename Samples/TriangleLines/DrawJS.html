@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<script src="../../Models/Vector2D.js"></script>
+		<script src="../../Models/Vector3D.js"></script>
+		<script src="../../Models/Cube.js"></script>
+		<script src="../../Models/TriangleModel.js"></script>
+		<script src="TriangleLinesModel.js"></script>
+				
+		<script src="../../Drawing/Graphics.js"></script>
+		<script src="../../Drawing/DrawingInformation.js"></script>
+		<script src="../../Drawing/DrawVector3D.js"></script>
+		<script src="../../Drawing/DrawVector2D.js"></script>
+		<script src="../../Drawing/DrawCube.js"></script>
+
+		
+		<script src="main.js"></script>
+		<style>
+			body {
+				margin: 0 0 0 0
+			}
+		</style>
+	</head>
+	<body onload="initialize();">
+		<div id="menu" style="float:left">
+			Triangle Height <input type="text" id="menuTriangleHeight" value="1">
+			<br/>
+			Triangle Width <input type="text" id="menuTriangleWidth"  value="1">
+			<br/>
+			Number of Steps<input type="text" id="menuNumberOfSteps"  value="20">
+			<br/>
+			Line Thickness<input type="text" id="menuLineThickness"  value="2">
+			<br/>
+			Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
+			<br/>
+			Triangle Colors<input type="text" id="menuTriangleColor" value="#000000">
+			<br/>
+			<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+		</div>
+		
+		<canvas id="scene" ></canvas>
+	</body>
+</html>
