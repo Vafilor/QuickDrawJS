@@ -1,12 +1,18 @@
 function DrawTriangleLines() {
 }
 
-DrawTriangleLines.draw = function drawTriangleLines(triangleModel, triangleLinesModel) {
+DrawTriangleLines.draw = function drawTriangleLines(triangleModel, triangleLinesModel, drawTriangleFunction) {
+	
+	var drawTriangle = DrawTriangle.draw;
+	
+	if(drawTriangleFunction != undefined) {
+		drawTriangle = drawTriangleFunction;
+	}
 	
 	var leftScale = triangleModel.top.subtract(triangleModel.bottomLeft).magnitude() / triangleLinesModel.numberOfSteps;
 	var bottomScale = triangleModel.bottomRight.subtract(triangleModel.bottomLeft).magnitude() / triangleLinesModel.numberOfSteps;
 	
-	DrawTriangle.draw(triangleModel, triangleLinesModel.lineThickness, triangleLinesModel.triangleColor);
+	drawTriangle(triangleModel, triangleLinesModel.lineThickness, triangleLinesModel.triangleColor);
 	
 	
 	var topBottomLeftVectorUnit = triangleModel.bottomLeft.subtract(triangleModel.top).normalize().scale(leftScale);
