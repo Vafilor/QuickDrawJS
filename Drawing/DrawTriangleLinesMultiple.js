@@ -2,7 +2,7 @@ function DrawTriangleLinesMultiple() {
 }
 
 DrawTriangleLinesMultiple.draw = function(triangleLinesModel) {
-	var numberOfTriangles = 5;
+	var numberOfTriangles = 7;
 	var triangleLength = 450;
 	
 	//Center point is leftBottom of triangle
@@ -26,7 +26,7 @@ DrawTriangleLinesMultiple.draw = function(triangleLinesModel) {
 			bottomLeft: centerPoint
 		});
 
-		DrawTriangleLines.draw(triangleModel, triangleLinesModel);
+		DrawTriangleLines.draw(triangleModel, triangleLinesModel, DrawTriangle, DrawTriangle.drawNoTopBottomRight);
 
 		totalRadians = i * 360 / numberOfTriangles * Math.PI / 180;
 	}
