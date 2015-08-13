@@ -63,31 +63,13 @@ function draw(model)
 	var padding = 25;
 	var triangleModel = TriangleModel.createFromBoundingRectangle( new Vector2D(padding, padding), new Vector2D( model.triangleWidth - padding, model.triangleHeight - padding) );
 	
-	var leftScale = triangleModel.top.subtract(triangleModel.bottomLeft).magnitude() / model.numberOfSteps;
-	var bottomScale = triangleModel.bottomRight.subtract(triangleModel.bottomLeft).magnitude() / model.numberOfSteps;
-	
 	Graphics.drawFilledRectangle(drawingInformation.brush, 0, 0, drawingInformation.screenWidth, drawingInformation.screenHeight, model.backgroundColor);
 
-	drawTriangle(triangleModel, model.lineThickness, model.triangleColor);
-	
-	
-	var topBottomLeftVectorUnit = triangleModel.bottomLeft.subtract(triangleModel.top).normalize().scale(leftScale);
-	var bottomLeftToRightVectorUnit = triangleModel.bottomRight.subtract(triangleModel.bottomLeft).normalize().scale(bottomScale);
-	
-	
-	var leftVector = triangleModel.top;
-	var bottomVector = triangleModel.bottomLeft;
-	
-	for(var i = 0; i < model.numberOfSteps; i++ ) {
-		Graphics.drawLine(drawingInformation.brush, leftVector.x, leftVector.y, bottomVector.x, bottomVector.y,  model.lineThickness, model.triangleColor );
-		
-		leftVector = leftVector.add(topBottomLeftVectorUnit);
-		bottomVector = bottomVector.add( bottomLeftToRightVectorUnit );
-	}	
+	DrawTriangleLines.draw(triangleModel, model);
 }
 
-function drawTriangle(triangleModel, thickness, color) {
-	Graphics.drawLine(drawingInformation.brush, triangleModel.top.x, triangleModel.top.y, triangleModel.bottomLeft.x, triangleModel.bottomLeft.y, thickness, color);
-	Graphics.drawLine(drawingInformation.brush, triangleModel.top.x, triangleModel.top.y, triangleModel.bottomRight.x, triangleModel.bottomRight.y, thickness, color);
-	Graphics.drawLine(drawingInformation.brush, triangleModel.bottomLeft.x, triangleModel.bottomLeft.y, triangleModel.bottomRight.x, triangleModel.bottomRight.y, thickness, color);
+
+
+function degreesToRadians(degrees) {
+	return degrees * Math.PI / 180;
 }
