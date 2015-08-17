@@ -16,15 +16,10 @@ function initialize(){
 
 	drawingInformation = new DrawingInformation(brush, canvas.width, canvas.height, 0, 0);
 	
-	this.populateDefaultRuntimeValues(length, length);	
 	
 	requestDraw();
 }
 
-function populateDefaultRuntimeValues(width, height) {
-	document.getElementById("menuTriangleWidth").value = width;
-	document.getElementById("menuTriangleHeight").value = height;
-}
 
 function requestDraw()
 {
@@ -40,20 +35,21 @@ function requestDraw()
 }
 
 function getInput() {
-	var triangleHeight = parseInt(document.getElementById("menuTriangleHeight").value);
-	var triangleWidth = parseInt(document.getElementById("menuTriangleWidth").value);
+	var numberOfTriangles = parseInt(document.getElementById("menuNumberOfTriangles").value);
 	var numberOfSteps = parseFloat(document.getElementById("menuNumberOfSteps").value);
 	var triangleColor = document.getElementById("menuTriangleColor").value;
+	var triangleLength = parseFloat(document.getElementById("menuTriangleLength").value);
 	var backgroundColor = document.getElementById("menuBackgroundColor").value;
 	var lineThickness = parseFloat(document.getElementById("menuLineThickness").value );
 	
-	return new TriangleLinesModel( { 
-		triangleHeight : triangleHeight,
-		triangleWidth : triangleWidth,
+	
+	return new MultipleTriangleLinesModel( { 
+		numberOfTriangles : numberOfTriangles,
 		numberOfSteps : numberOfSteps,
 		triangleColor: triangleColor,
 		backgroundColor: backgroundColor,
-		lineThickness : lineThickness
+		lineThickness : lineThickness,
+		triangleLength: triangleLength
 	});
 }
 
@@ -61,7 +57,6 @@ function getInput() {
 function draw(model)
 {
 	var padding = 25;
-	var triangleModel = TriangleModel.createFromBoundingRectangle( new Vector2D(padding, padding), new Vector2D( model.triangleWidth - padding, model.triangleHeight - padding) );
 	
 	Graphics.drawFilledRectangle(drawingInformation.brush, 0, 0, drawingInformation.screenWidth, drawingInformation.screenHeight, model.backgroundColor);
 
