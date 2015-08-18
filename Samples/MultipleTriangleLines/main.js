@@ -14,12 +14,18 @@ function initialize(){
 	canvas.height = length;
 	var brush = canvas.getContext("2d");
 
+	//Divide by 2 because each image takes about 2 triangles length top to bottom, left to right.
+	this.populateDefaultRuntimeValues(length/2);	
+
 	drawingInformation = new DrawingInformation(brush, canvas.width, canvas.height, 0, 0);
 	
 	
 	requestDraw();
 }
 
+function populateDefaultRuntimeValues(length) {
+	document.getElementById("menuTriangleLength").value = length;
+}
 
 function requestDraw()
 {
