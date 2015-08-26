@@ -1,21 +1,6 @@
 <html>
 	<head>
-		<script src="../../Models/Vector2D.js"></script>
-		<script src="../../Models/Vector3D.js"></script>
-		<script src="../../Models/Cube.js"></script>
-		<script src="../../Models/TriangleModel.js"></script>
-		<script src="../../Models/TriangleLinesModel.js"></script>
-		<script src="../../Models/MultipleTriangleLinesModel.js"></script>
-				
-		<script src="../../Drawing/Graphics.js"></script>
-		<script src="../../Drawing/DrawingInformation.js"></script>
-		<script src="../../Drawing/DrawVector3D.js"></script>
-		<script src="../../Drawing/DrawVector2D.js"></script>
-		<script src="../../Drawing/DrawTriangle.js"></script>
-		<script src="../../Drawing/DrawTriangleLines.js"></script>
-		<script src="../../Drawing/DrawTriangleLinesMultiple.js"></script>
-		
-		<script src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../indexstyle.css">
 		<style>
 			body {
 				margin: 0 0 0 0
@@ -23,22 +8,64 @@
 		</style>
 	</head>
 	<body onload="initialize();">
-		<div id="menu" style="float:left">
-			Number of Triangles <input type="text" id="menuNumberOfTriangles"  value="3">
-			<br/>
-			Number of Steps<input type="text" id="menuNumberOfSteps"  value="20">
-			<br/>
-			Line Thickness<input type="text" id="menuLineThickness"  value="2">
-			<br/>
-			Triangle Length<input type="text" id="menuTriangleLength"  value="450">
-			<br/>			
-			Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
-			<br/>
-			Triangle Colors<input type="text" id="menuTriangleColor" value="#000000">
-			<br/>
-			<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+		<div id="o-wrapper" class="o-wrapper">
+
+			<div class="c-buttons" style="float:right">
+				<button id="c-button--slide-right" class="c-button">See Other Samples</button>
+			</div>
+
+			<div id="menu" style="float:left">
+				Number of Triangles <input type="text" id="menuNumberOfTriangles"  value="3">
+				<br/>
+				Number of Steps<input type="text" id="menuNumberOfSteps"  value="20">
+				<br/>
+				Line Thickness<input type="text" id="menuLineThickness"  value="2">
+				<br/>
+				Triangle Length<input type="text" id="menuTriangleLength"  value="450">
+				<br/>			
+				Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
+				<br/>
+				Triangle Colors<input type="text" id="menuTriangleColor" value="#000000">
+				<br/>
+				<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+			</div>
+		
+			<canvas id="scene" ></canvas>
+					
 		</div>
 		
-		<canvas id="scene" ></canvas>
+		<nav id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+			<button class="c-menu__close">Close Menu</button>
+			<ul class="c-menu__items">
+				<li class="c-menu__item"><a href="../../index.html" class="c-menu__link">Circle Fractals</a></li>
+				<li class="c-menu__item"><a href="../../Samples/TriangleLines/DrawJS.html" class="c-menu__link">Triangle Lines</a></li>
+				<li class="c-menu__item"><a href="../../Samples/MultipleTriangleLines/DrawJS.html" class="c-menu__link">Multiple Triangle Line Drawer</a></li>
+			</ul>
+		</nav>
+		
+		<div id="c-mask" class="c-mask"></div>
+
 	</body>
+	
+	<script src="../../Menu.js"></script>
+	<script src="../../Models/Vector2D.js"></script>
+	<script src="../../Models/Vector3D.js"></script>
+	<script src="../../Models/Cube.js"></script>
+	<script src="../../Models/TriangleModel.js"></script>
+	<script src="../../Models/TriangleLinesModel.js"></script>
+	<script src="../../Models/MultipleTriangleLinesModel.js"></script>
+			
+	<script src="../../Drawing/Graphics.js"></script>
+	<script src="../../Drawing/DrawingInformation.js"></script>
+	<script src="../../Drawing/DrawVector3D.js"></script>
+	<script src="../../Drawing/DrawVector2D.js"></script>
+	<script src="../../Drawing/DrawTriangle.js"></script>
+	<script src="../../Drawing/DrawTriangleLines.js"></script>
+	<script src="../../Drawing/DrawTriangleLinesMultiple.js"></script>
+	
+	<script src="main.js"></script>
+	
+	<script> 			
+		var slideRight = Menu.createDefaultSlideRight();
+	</script>
 </html>

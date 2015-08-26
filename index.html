@@ -1,16 +1,6 @@
 <html>
 	<head>
-		<script src="Models/Vector2D.js"></script>
-		<script src="Models/Vector3D.js"></script>
-		<script src="Models/Cube.js"></script>
-		
-		<script src="Drawing/Graphics.js"></script>
-		<script src="Drawing/DrawingInformation.js"></script>
-		<script src="Drawing/DrawVector3D.js"></script>
-		<script src="Drawing/DrawVector2D.js"></script>
-		<script src="Drawing/DrawCube.js"></script>
-		
-		<script src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="indexstyle.css">
 		<style>
 			body {
 				margin: 0 0 0 0
@@ -18,34 +8,68 @@
 		</style>
 	</head>
 	<body onload="initialize();">
-		<div id="menu" style="float:left">
-			Number of Circles <input type="text" id="menuNumberCircles" value="3">
-			<br/>
-			Depth <input type="text" id="menuFractalDepth"  value="3">
-			<br/>
-			Line Length<input type="text" id="menuLineLength"  value="1">
-			<br/>
-			Circle Width<input type="text" id="menuCircleWidth"  value="2">
-			<br/>
-			Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
-			<br/>
-			<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesOverlapping" value="overlapping"> Overlapping
-			<br/>
-			<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesNonOverlapping" value="nonOverlapping" checked="true"> Non-Overlapping
-			<br/>
-			<input type="checkbox" id="menuDrawLines"> Draw Lines
-			<br/>
-			<input type="checkbox" id="menuDrawCircles" checked="true"> Draw Circles
-			<br/>
-			<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
-			<br/>
-			<br/>
-			<a href="Samples/TriangleLines/DrawJS.html">Triangle Line Drawer</a>
-			<br/>
-			<a href="Samples/MultipleTriangleLines/DrawJS.html">Multiple Triangle Line Drawer</a>
-
-		</div>
+		<div id="o-wrapper" class="o-wrapper">
 		
-		<canvas id="scene" ></canvas>
+			<div class="c-buttons" style="float:right">
+				<button id="c-button--slide-right" class="c-button">See Other Samples</button>
+			</div>
+		
+			<div id="menu" style="float:left">
+				Number of Circles <input type="text" id="menuNumberCircles" value="3">
+				<br/>
+				Depth <input type="text" id="menuFractalDepth"  value="3">
+				<br/>
+				Line Length<input type="text" id="menuLineLength"  value="1">
+				<br/>
+				Circle Width<input type="text" id="menuCircleWidth"  value="2">
+				<br/>
+				Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
+				<br/>
+				<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesOverlapping" value="overlapping"> Overlapping
+				<br/>
+				<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesNonOverlapping" value="nonOverlapping" checked="true"> Non-Overlapping
+				<br/>
+				<input type="checkbox" id="menuDrawLines"> Draw Lines
+				<br/>
+				<input type="checkbox" id="menuDrawCircles" checked="true"> Draw Circles
+				<br/>
+				<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+				<br/>
+				<br/>
+			</div>
+		
+			<canvas id="scene" ></canvas>
+		
+		</div>
+
+		<nav id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+			<button class="c-menu__close">Close Menu</button>
+			<ul class="c-menu__items">
+				<li class="c-menu__item"><a href="index.html" class="c-menu__link">Circle Fractals</a></li>
+				<li class="c-menu__item"><a href="Samples/TriangleLines/DrawJS.html" class="c-menu__link">Triangle Lines</a></li>
+				<li class="c-menu__item"><a href="Samples/MultipleTriangleLines/DrawJS.html" class="c-menu__link">Multiple Triangle Line Drawer</a></li>
+			</ul>
+		</nav>
+		
+		<div id="c-mask" class="c-mask"></div>
 	</body>
+	
+	<script src="Menu.js"></script>
+	<script src="Models/Vector2D.js"></script>
+	<script src="Models/Vector3D.js"></script>
+	<script src="Models/Cube.js"></script>
+	
+	<script src="Drawing/Graphics.js"></script>
+	<script src="Drawing/DrawingInformation.js"></script>
+	<script src="Drawing/DrawVector3D.js"></script>
+	<script src="Drawing/DrawVector2D.js"></script>
+	<script src="Drawing/DrawCube.js"></script>
+	
+	
+	<script src="main.js"></script>
+	
+	<script> 			
+		var slideRight = Menu.createDefaultSlideRight();
+	</script>
+		
 </html>
