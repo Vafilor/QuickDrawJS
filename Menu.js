@@ -134,6 +134,8 @@
 		  slideRight.open();
 		});	
 		
+		slideRight.open();
+		
 		return slideRight;
   }
 })(window);
