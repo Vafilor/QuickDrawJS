@@ -70,6 +70,7 @@ function isValidData()
 	var drawLines = document.getElementById("menuDrawLines").checked;
 	var drawCircles = document.getElementById("menuDrawCircles").checked;
 	var backgroundColor = document.getElementById("menuBackgroundColor").value;
+	var foregroundColor = document.getElementById("menuForegroundColor").value;
 	
 	var isValid = isValidNumberOfCircles(numberOfCircles) &&
 				  isValidFractalDepth(fractalDepth)       &&
@@ -97,7 +98,8 @@ function isValidData()
 		overlapping: overlapping,
 		drawLines: drawLines,
 		drawCircles: drawCircles,
-		backgroundColor: backgroundColor
+		backgroundColor: backgroundColor,
+		foregroundColor: foregroundColor
 	};
 	
 	return results;
@@ -192,7 +194,7 @@ function draw()
 	
 	var startTime = Date.now();
 	
-	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping, inputData.lineLength, inputData.circleWidth);
+	drawCircles(centerPoint, bigCircleRadius, inputData.numberOfCircles, 0, inputData.fractalDepth, inputData.drawLines, inputData.drawCircles, inputData.overlapping, inputData.lineLength, inputData.circleWidth, inputData.foregroundColor);
 
 	var endTime = Date.now();
 	
@@ -203,7 +205,7 @@ function draw()
 	
 }
 
-function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength, circleWidth)
+function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength, circleWidth, color)
 {
 		if( depth > maxDepth )
 		{
@@ -226,13 +228,13 @@ function drawCircles(centerPoint, bigCircleRadius, numberOfCircles, depth, maxDe
 			currentChildCenter = centerPoint.add(currentVector.rotate(currentRadians));
 			
 			if(doDrawCircles) {
-				Graphics.drawCircle(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(bigCircleRadius), circleWidth, "#FF0000"); //TODO dynamic width
+				Graphics.drawCircle(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(bigCircleRadius), circleWidth, color); 
 			}
 			
 			if(drawLines) {
 				var lineEndPoint = centerPoint.add(currentVector.scale(lineLength).rotate(currentRadians));
 		
-				Graphics.drawLine(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(lineEndPoint.x), Math.floor(lineEndPoint.y), 2, "#FF0000");
+				Graphics.drawLine(drawingInformation.brush, Math.floor(centerPoint.x), Math.floor(centerPoint.y), Math.floor(lineEndPoint.x), Math.floor(lineEndPoint.y), 2, color);
 			}
 			
 			drawCircles(currentChildCenter, smallCircleRadius, numberOfCircles, depth + 1, maxDepth, drawLines, doDrawCircles, overlappingCircles, lineLength );
