@@ -3,7 +3,19 @@
 		<link rel="stylesheet" type="text/css" href="indexstyle.css">
 		<style>
 			body {
-				margin: 0 0 0 0
+				margin: 0 0 0 0;
+			}
+			
+			.title {
+				text-align: left;
+			}
+			
+			.trigger {
+				width: 80%;
+				margin-left:10%;
+				margin-top: 10px;
+				padding: 0.25rem;
+				font-size: .85rem;
 			}
 		</style>
 	</head>
@@ -11,33 +23,58 @@
 		<div id="o-wrapper" class="o-wrapper">
 		
 			<div class="c-buttons" style="float:right">
-				<button id="c-button--slide-right" class="c-button">See Other Samples</button>
+				<button id="c-button--slide-right" class="c-button trigger">See Other Samples</button>
 			</div>
 		
 			<div id="menu" style="float:left">
-				Number of Circles <input type="text" id="menuNumberCircles" value="3">
-				<br/>
-				Depth <input type="text" id="menuFractalDepth"  value="3">
-				<br/>
-				Line Length<input type="text" id="menuLineLength"  value="1">
-				<br/>
-				Circle Width<input type="text" id="menuCircleWidth"  value="2">
-				<br/>
-				Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
-				<br/>
-				Circle/Line Color<input type="text" id="menuForegroundColor" value="#000000">
-				<br/>
-				<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesOverlapping" value="overlapping"> Overlapping
-				<br/>
-				<input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesNonOverlapping" value="nonOverlapping" checked="true"> Non-Overlapping
-				<br/>
-				<input type="checkbox" id="menuDrawLines"> Draw Lines
-				<br/>
-				<input type="checkbox" id="menuDrawCircles" checked="true"> Draw Circles
-				<br/>
-				<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
-				<br/>
-				<br/>
+				<table>
+					<tr>
+						<th colspan="2">Menu</th>
+					</tr>
+					<tr>
+						<th class="title">Number of Circles</th>
+						<td><input type="text" id="menuNumberCircles" value="3"></td>
+					</tr>
+					<tr>
+						<th class="title">Depth</th>
+						<td><input type="text" id="menuFractalDepth"  value="3"></td>
+					</tr>
+					<tr>
+						<th class="title">Line Length</th>
+						<td><input type="text" id="menuLineLength"  value="1"></td>
+					</tr>
+					<tr>
+						<th class="title">Circle Thickness</th>
+						<td><input type="text" id="menuCircleWidth"  value="2"></td>
+					</tr>		
+					<tr>
+						<th class="title">Background Color</th>
+						<td><input type="text" id="menuBackgroundColor"  value="#FFFFFF"></td>
+					</tr>
+					<tr>
+						<th class="title">Circle/Line Color</th>
+						<td><input type="text" id="menuForegroundColor" value="#000000"></td>
+					</tr>		
+					<tr>
+						<th class="title">Circles</th>
+						<td><input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesOverlapping" value="overlapping"> Overlapping</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="radio" name="menuRadioOverlapping" id="menuTypeOfCirclesNonOverlapping" value="nonOverlapping" checked="true"> Non-Overlapping</td>
+					</tr>
+					<tr>
+						<th class="title">Drawing</th>
+						<td><input type="checkbox" id="menuDrawLines"> Draw Lines</td>
+					</tr>
+					<tr>
+						<td/>
+						<td><input type="checkbox" id="menuDrawCircles" checked="true"> Draw Circles</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input class="trigger" type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw"></td>
+					</tr>
+				</table>
 			</div>
 		
 			<canvas id="scene" ></canvas>
