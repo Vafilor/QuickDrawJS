@@ -56,7 +56,7 @@ function isDepthDangerous(depth)
 
 function displayDepthWarning()
 {
-	alert("Fractal depth is dangerous!");
+	return confirm("Careful - it might hang with this depth. Are you sure you want to try?");
 }
 //Returns an object of data processed
 //and a result that marks if true if valid or false if not.
