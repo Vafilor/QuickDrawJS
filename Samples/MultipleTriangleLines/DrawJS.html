@@ -3,7 +3,19 @@
 		<link rel="stylesheet" type="text/css" href="../../indexstyle.css">
 		<style>
 			body {
-				margin: 0 0 0 0
+				margin: 0 0 0 0;
+			}
+			
+			.title {
+				text-align: left;
+			}
+			
+			.trigger {
+				width: 80%;
+				margin-left:10%;
+				margin-top: 10px;
+				padding: 0.25rem;
+				font-size: .85rem;
 			}
 		</style>
 	</head>
@@ -11,23 +23,46 @@
 		<div id="o-wrapper" class="o-wrapper">
 
 			<div class="c-buttons" style="float:right">
-				<button id="c-button--slide-right" class="c-button">See Other Samples</button>
+				<button id="c-button--slide-right" class="c-button trigger">See Other Samples</button>
 			</div>
 
 			<div id="menu" style="float:left">
-				Number of Triangles <input type="text" id="menuNumberOfTriangles"  value="3">
-				<br/>
-				Number of Steps<input type="text" id="menuNumberOfSteps"  value="20">
-				<br/>
-				Line Thickness<input type="text" id="menuLineThickness"  value="2">
-				<br/>
-				Triangle Length<input type="text" id="menuTriangleLength"  value="450">
-				<br/>			
-				Background Color<input type="text" id="menuBackgroundColor"  value="#FFFFFF">
-				<br/>
-				Triangle Colors<input type="text" id="menuTriangleColor" value="#000000">
-				<br/>
-				<input type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw">
+				<table>
+					<tr>
+						<th colspan="2">Menu</th>
+					</tr>
+					<tr>
+						<th class="title">Number of Triangles</th>
+						<td><input type="text" id="menuNumberOfTriangles"  value="3"></td>
+					</tr>
+					<tr>
+						<th class="title">Number of Steps</th>
+						<td><input type="text" id="menuNumberOfSteps"  value="20"></td>
+					</tr>		
+					<tr>
+						<th class="title">Line Thickness</th>
+						<td><input type="text" id="menuLineThickness"  value="2"></td>
+					</tr>	
+					<tr>
+						<th class="title">Line Thickness</th>
+						<td><input type="text" id="menuLineThickness"  value="2"></td>
+					</tr>	
+					<tr>
+						<th class="title">Triangle Length</th>
+						<td><input type="text" id="menuTriangleLength"  value="450"></td>
+					</tr>	
+					<tr>
+						<th class="title">Background Color</th>
+						<td><input type="text" id="menuBackgroundColor"  value="#FFFFFF"></td>
+					</tr>
+					<tr>
+						<th class="title">Triangle Colors</th>
+						<td><input type="text" id="menuTriangleColor" value="#000000"></td>
+					</tr>		
+					<tr>
+						<td colspan="2"><input class="trigger" type="button" onclick="requestDraw();" id="menuButtonSubmit" value="Draw"></td>
+					</tr>
+				</table>
 			</div>
 		
 			<canvas id="scene" ></canvas>
